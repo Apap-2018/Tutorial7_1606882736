@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Delete Car</title>
+	</head>
+	<body>
+		<h2>Hello!</h2>
+		
+		<h3>Hapus Mobil</h3>
+		<form th:action="@{/car/delete}" method="POST">
+			<input type="hidden" name="{idDealer}"/>
+			Id: <br>
+			<input type="text" name="carId" />
+			<br><br>
+			<button type="submit">Submit</button>
+		</form>
+	</body>
+</html>
