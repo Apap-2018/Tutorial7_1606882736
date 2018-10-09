@@ -28,18 +28,21 @@ public class CarController {
 		car.setDealer(dealer);
 		
 		model.addAttribute("car", car);
+		model.addAttribute("title","Add Car");
 		return "addCar";
 	}
 	
 	@RequestMapping(value = "/car/add", method=RequestMethod.POST)
-	private String addCarSubmit(@ModelAttribute CarModel car) {
+	private String addCarSubmit(@ModelAttribute CarModel car, Model model) {
 		carService.addCar(car);
+		model.addAttribute("title","Add Succes");
 		return "add";
 	}
 	
 	@RequestMapping(value = "/car/delete/{dealerId}", method=RequestMethod.GET)
 	private String deleteCar(@PathVariable(value="dealerId") Long dealerId, Model model) {
 		System.out.println(dealerId);
+		model.addAttribute("title","Delete Car");
 		return "deleteCar";
 	}
 
@@ -48,6 +51,7 @@ public class CarController {
 		for(CarModel car: dealer.getListCar()) {
 			carService.deleteCar(car);
 		}
+		model.addAttribute("title","Delete Succes");
 		return "delete";
 	}
 	
@@ -55,12 +59,14 @@ public class CarController {
 	private String updateCar(@PathVariable(value = "id") long id, Model model) {
 		CarModel car = carService.getCar(id);
 		model.addAttribute("car",car);
+		model.addAttribute("title","Update Car");
 		return "update-car";
 	}
 	
 	@RequestMapping(value = "/car/update/{id}", method = RequestMethod.POST)
-	private String updateCar(@PathVariable(value = "id") long id, @ModelAttribute CarModel car) {
+	private String updateCar(@PathVariable(value = "id") long id, @ModelAttribute CarModel car, Model model) {
 		carService.updateCar(id, car);
+		model.addAttribute("title","Update Succes");
 		return "update";
 	}
 }

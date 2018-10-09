@@ -28,19 +28,22 @@ public class DealerController {
 	private CarService carService;
 	
 	@RequestMapping("/")
-	private String home() {
+	private String home(Model model) {
+		model.addAttribute("title","Home");
 		return "home";
 	}
 	
 	@RequestMapping(value = "/dealer/add", method = RequestMethod.GET)
 	private String add (Model model) {
 		model.addAttribute("dealer", new DealerModel());
+		model.addAttribute("title","Add Dealer");
 		return "addDealer";
 	}
 	
 	@RequestMapping(value = "/dealer/add", method = RequestMethod.POST)
-	private String addDealerSubmit(@ModelAttribute DealerModel dealer) {
+	private String addDealerSubmit(@ModelAttribute DealerModel dealer, Model model) {
 		dealerService.addDealer(dealer);
+		model.addAttribute("title","Add Succes");
 		return "add";
 	}
 	
@@ -56,6 +59,7 @@ public class DealerController {
 		model.addAttribute("listCar", listCar);
 		model.addAttribute("deal", dealer);
 		model.addAttribute("dealId", dealerId);
+		model.addAttribute("title","View Dealer");
 		return "view-dealer";
 	}
 	
@@ -65,6 +69,7 @@ public class DealerController {
 			DealerModel dealer = dealerService.getDealerDetailById(Long.parseLong(dealerId)).get();
 			if (dealer.getListCar().isEmpty()) {
 				dealerService.deleteDealer(dealer);
+				model.addAttribute("title","Delete Succes");
 				return "delete";
 			}
 			else {
@@ -73,10 +78,12 @@ public class DealerController {
 					System.out.println(car);
 					carService.deleteCar(car);
 					dealerService.deleteDealer(dealer);
+					model.addAttribute("title","Delete Succes");
 					return "delete";
 				}
 			}
 		}
+		model.addAttribute("title","Error");
 		return "error";
 	}
 	
@@ -84,15 +91,18 @@ public class DealerController {
 	private String updateDealer(@PathVariable(value="dealerId") Long dealerId, Model model) {
 		DealerModel dealer = dealerService.getDealerDetailById(dealerId).get();
 		model.addAttribute("deal", dealer);
+		model.addAttribute("title","Update Dealer");
 		return "update-dealer";
 	}
 	
 	@RequestMapping(value="/dealer/update/{dealerId}", method = RequestMethod.POST)
-	private String update(@PathVariable(value="dealerId") Long dealerId, @ModelAttribute Optional<DealerModel> deal) {
+	private String update(@PathVariable(value="dealerId") Long dealerId, @ModelAttribute Optional<DealerModel> deal, Model model) {
 		if(deal.isPresent()) {
 			dealerService.updateDealer(deal, dealerId);
+			model.addAttribute("title","Update Succes");
 			return "update";
 		}
+		model.addAttribute("title","Error");
 		return "error";
 	}
 	
@@ -101,6 +111,7 @@ public class DealerController {
 		List<DealerModel> listDealer = dealerService.getAllDealer();
 		
 		model.addAttribute("listDealer", listDealer);
+		model.addAttribute("title","View All Car");
 		return "view-all-dealer";
 	}
 
