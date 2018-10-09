@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Add Car</title>
+		<title>Update Dealer</title>
 		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 		<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	</head>
@@ -9,20 +9,13 @@
 		<nav th:replace="fragments/fragment :: navbar"></nav>
 		<h2>Hello!</h2>
 		
-		<h3>Tambah Mobil</h3>
-		<form th:action="@{/car/add}" th:object="${car}" method="POST">
-			<input type="hidden" th:field="*{dealer}"/>
-			Brand: <br>
-			<input type="text" name="brand" />
+		<h3>Ubah Dealer</h3>
+		<form th:action="@{/dealer/update/{dealerId}(dealerId=${deal.id})}" th:object="${deal}" method="POST">
+			Alamat: <br>
+			<input type="text" name="alamat" />
 			<br>
-			Type: <br>
-			<input type="text" name="type" />
-			<br>
-			Price: <br>
-			<input type="number" name="price" />
-			<br>
-			Amount: <br>
-			<input type="number" name="amount" />
+			No. Telp: <br>
+			<input type="text" name="noTelp" />
 			<br><br>
 			<button type="submit">Submit</button>
 		</form>

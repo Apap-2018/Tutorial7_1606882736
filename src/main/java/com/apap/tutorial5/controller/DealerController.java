@@ -1,4 +1,4 @@
-package com.apap.tutorial4.controller;
+package com.apap.tutorial5.controller;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.apap.tutorial4.model.CarModel;
-import com.apap.tutorial4.model.DealerModel;
-import com.apap.tutorial4.service.CarService;
-import com.apap.tutorial4.service.DealerService;
+import com.apap.tutorial5.model.CarModel;
+import com.apap.tutorial5.model.DealerModel;
+import com.apap.tutorial5.service.CarService;
+import com.apap.tutorial5.service.DealerService;
 
 @Controller
 public class DealerController {
@@ -87,6 +87,15 @@ public class DealerController {
 		return "update-dealer";
 	}
 	
+	@RequestMapping(value="/dealer/update/{dealerId}", method = RequestMethod.POST)
+	private String update(@PathVariable(value="dealerId") Long dealerId, @ModelAttribute Optional<DealerModel> deal) {
+		if(deal.isPresent()) {
+			dealerService.updateDealer(deal, dealerId);
+			return "update";
+		}
+		return "error";
+	}
+	
 	@RequestMapping(value="/dealer/view-all", method= RequestMethod.GET)
 	private String viewAllCar(Model model) {
 		List<DealerModel> listDealer = dealerService.getAllDealer();
@@ -95,6 +104,7 @@ public class DealerController {
 		return "view-all-dealer";
 	}
 
+	CarModel car;
 	public static Comparator<CarModel> comparePrice = new Comparator<CarModel>() {
 		public int compare(CarModel o1, CarModel o2) {
 			Long price1 = o1.getPrice();

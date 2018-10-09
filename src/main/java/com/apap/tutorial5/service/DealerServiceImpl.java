@@ -1,4 +1,4 @@
-package com.apap.tutorial4.service;
+package com.apap.tutorial5.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.apap.tutorial4.model.DealerModel;
-import com.apap.tutorial4.repository.DealerDb;
+import com.apap.tutorial5.model.DealerModel;
+import com.apap.tutorial5.repository.DealerDb;
 
 @Service
 @Transactional
@@ -25,13 +25,27 @@ public class DealerServiceImpl implements DealerService {
 	public void addDealer(DealerModel dealer) {
 		dealerDb.save(dealer);
 	}
-	
+
 	@Override
 	public void deleteDealer(DealerModel dealer) {
 		dealerDb.delete(dealer);
 		
 	}
-	
+
+	@Override
+	public void updateDealer(Optional<DealerModel> dealer, Long dealerId) {
+		DealerModel dealerUpdt = dealerDb.getOne(dealerId);
+		dealerUpdt.setAlamat(dealer.get().getAlamat());
+		dealerUpdt.setNoTelp(dealer.get().getNoTelp());;
+		dealerDb.save(dealerUpdt);
+	}
+
+	@Override
+	public void sortCar(DealerModel dealer) {
+		
+		
+	}
+
 	@Override
 	public List<DealerModel> getAllDealer() {
 		return dealerDb.findAll();
