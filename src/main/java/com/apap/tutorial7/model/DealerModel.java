@@ -1,4 +1,4 @@
-package com.apap.tutorial5.model;
+package com.apap.tutorial7.model;
 
 import java.io.Serializable;
 import java.util.List;

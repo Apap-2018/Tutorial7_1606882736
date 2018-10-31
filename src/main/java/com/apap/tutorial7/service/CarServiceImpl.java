@@ -1,13 +1,14 @@
-package com.apap.tutorial5.service;
+package com.apap.tutorial7.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.apap.tutorial5.model.CarModel;
-import com.apap.tutorial5.repository.CarDb;
+import com.apap.tutorial7.model.CarModel;
+import com.apap.tutorial7.repository.CarDb;
 
 
 @Service
@@ -17,8 +18,8 @@ public class CarServiceImpl implements CarService{
 	private CarDb carDb;
 	
 	@Override
-	public void addCar(CarModel car) {
-		carDb.save(car);
+	public CarModel addCar(CarModel car) {
+		return carDb.save(car);
 	}
 	
 	@Override
@@ -27,8 +28,8 @@ public class CarServiceImpl implements CarService{
 	}
 	
 	@Override
-	public Optional<CarModel> getCarDetailById(Long id){
-		return carDb.findById(id);
+	public CarModel getCarDetailById(Long id){
+		return carDb.findById(id).get();
 	}
 	
 	@Override
@@ -44,5 +45,11 @@ public class CarServiceImpl implements CarService{
 		carUpdated.setPrice(newCar.getPrice());
 		carUpdated.setAmount(newCar.getAmount());
 		carDb.save(carUpdated);
+	}
+
+	@Override
+	public List<CarModel> viewAllCar() {
+		// TODO Auto-generated method stub
+		return carDb.findAll();
 	}
 }

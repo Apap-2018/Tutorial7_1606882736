@@ -1,4 +1,4 @@
-package com.apap.tutorial5.service;
+package com.apap.tutorial7.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.apap.tutorial5.model.DealerModel;
-import com.apap.tutorial5.repository.DealerDb;
+import com.apap.tutorial7.model.DealerModel;
+import com.apap.tutorial7.repository.DealerDb;
 
 @Service
 @Transactional
@@ -22,8 +22,8 @@ public class DealerServiceImpl implements DealerService {
 	}
 	
 	@Override
-	public void addDealer(DealerModel dealer) {
-		dealerDb.save(dealer);
+	public DealerModel addDealer(DealerModel dealer) {
+		return dealerDb.save(dealer);
 	}
 
 	@Override
@@ -32,13 +32,7 @@ public class DealerServiceImpl implements DealerService {
 		
 	}
 
-	@Override
-	public void updateDealer(Optional<DealerModel> dealer, Long dealerId) {
-		DealerModel dealerUpdt = dealerDb.getOne(dealerId);
-		dealerUpdt.setAlamat(dealer.get().getAlamat());
-		dealerUpdt.setNoTelp(dealer.get().getNoTelp());;
-		dealerDb.save(dealerUpdt);
-	}
+	
 
 	@Override
 	public void sortCar(DealerModel dealer) {
@@ -50,5 +44,14 @@ public class DealerServiceImpl implements DealerService {
 	public List<DealerModel> getAllDealer() {
 		return dealerDb.findAll();
 		
+	}
+
+	@Override
+	public void updateDealer(long id, DealerModel dealer) {
+		// TODO Auto-generated method stub
+		DealerModel dealerUpdt = dealerDb.getOne(id);
+		dealerUpdt.setAlamat(dealer.getAlamat());
+		dealerUpdt.setNoTelp(dealer.getNoTelp());;
+		dealerDb.save(dealerUpdt);
 	}
 }
