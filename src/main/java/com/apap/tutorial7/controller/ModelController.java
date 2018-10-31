@@ -1,6 +1,9 @@
 package com.apap.tutorial7.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -27,7 +30,10 @@ public class ModelController {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.add("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Mobile Safari/537.36");
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-		String path = Setting.modelUrl + "/?cmd=getModels&make=" + factory + "&year=2018";
+		Date date = new Date();
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		int year = localDate.getYear();
+		String path = Setting.modelUrl + "/?cmd=getModels&make=" + factory + "&year" + year;
 		Object response = restTemplate.exchange(path, HttpMethod.GET, entity, Object.class);
 		return response;
 	}
