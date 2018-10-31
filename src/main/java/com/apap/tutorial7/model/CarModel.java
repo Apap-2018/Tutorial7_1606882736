@@ -37,7 +37,6 @@ public class CarModel implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dealer_id", referencedColumnName = "Id", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
-	@JsonIgnore
 	private DealerModel dealer;
 
 	public long getId() {

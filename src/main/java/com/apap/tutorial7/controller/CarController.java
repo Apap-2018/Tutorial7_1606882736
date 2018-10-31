@@ -36,16 +36,22 @@ public class CarController {
 	
 	@GetMapping(value = "/{carId}")
 	private CarModel viewCar(@PathVariable ("carId") long carId, Model model) {
-		return carService.getCarDetailById(carId);
+		CarModel car = carService.getCarDetailById(carId);
+		car.setDealer(null);
+		return car;
 	}
 	
 	@GetMapping()
 	private List<CarModel> viewAllCar(Model model){
-		return carService.viewAllCar();
+		List<CarModel> listCar = carService.viewAllCar();
+		for(CarModel car: listCar) {
+			car.setDealer(null);
+		}
+		return listCar;
 	}
 	
 	@DeleteMapping(value = "/{carId}")
-	private String deleteDealer(@RequestParam ("carId") long carId, Model model) {
+	private String deleteDealer(@PathVariable("carId") long carId, Model model) {
 		CarModel car = carService.getCarDetailById(carId);
 		carService.deleteCar(car);
 		return "car has been deleted";
